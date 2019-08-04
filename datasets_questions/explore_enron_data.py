@@ -20,3 +20,12 @@ import pickle
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "rb"))
 
 
+count = 0
+totalCount = 0
+for key in enron_data.keys():
+    if enron_data[key]['total_payments'] == 'NaN' and enron_data[key]['poi'] == True:
+        count+=1
+    totalCount+=1
+
+
+    

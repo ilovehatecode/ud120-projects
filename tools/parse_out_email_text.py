@@ -2,6 +2,7 @@
 
 from nltk.stem.snowball import SnowballStemmer
 import string
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 def parseOutText(f):
     """ given an opened email file f, parse out all text below the
@@ -19,20 +20,29 @@ def parseOutText(f):
 
     f.seek(0)  ### go back to beginning of file (annoying)
     all_text = f.read()
-
     ### split off metadata
     content = all_text.split("X-FileName:")
     words = ""
     if len(content) > 1:
         ### remove punctuation
         text_string = content[1].translate(string.maketrans("", ""), string.punctuation)
-
+ ##       text_string = text_string.translate(string.maketrans("", ""), '\n\r\t')
         ### project part 2: comment out the line below
-        words = text_string
+        ## words = text_string
 
         ### split the text string into individual words, stem each word,
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
+        text_string_list = text_string.split(' ')
+        ## Remove spaces from list
+        text_string_list = filter(lambda a: a != '', text_string_list)
+        
+        stemmer = SnowballStemmer("english")
+        for word in text_string_list:
+            stemmed_word = stemmer.stem(word)
+            ##if stemmed_word != '':
+            words+= stemmed_word + " "
+        
         
 
 
