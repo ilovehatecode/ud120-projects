@@ -1,0 +1,66 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf500
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;\red35\green46\blue57;\red255\green255\blue255;\red62\green62\blue62;
+}
+{\*\expandedcolortbl;;\cssrgb\c18039\c23922\c28627;\cssrgb\c100000\c100000\c100000;\cssrgb\c30980\c30980\c30980;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+test_poi.py\
+\
+Run multiple classifiers on n-combinations of the features\
+\
+poi.py\
+\
+project file with the classifier that achieves > .3 recall, precision and accuracy \
+\
+\
+Read project details below\
+\
+\pard\pardeftab720\sl533\sa100\partightenfactor0
+
+\f1\b\fs40 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Project Introduction\
+\pard\pardeftab720\sl540\sa300\partightenfactor0
+
+\f0\b0\fs32 \cf4 \strokec4 In 2000, Enron was one of the largest companies in the United States. By 2002, it had collapsed into bankruptcy due to widespread corporate fraud. In the resulting Federal investigation, there was a significant amount of typically confidential information entered into public record, including tens of thousands of emails and detailed financial data for top executives. In this project, you will play detective, and put your new skills to use by building a person of interest identifier based on financial and email data made public as a result of the Enron scandal. To assist you in your detective work, we've combined this data with a hand-generated list of persons of interest in the fraud case, which means individuals who were indicted, reached a settlement, or plea deal with the government, or testified in exchange for prosecution immunity.\
+\pard\pardeftab720\sl533\sa100\partightenfactor0
+
+\f1\b\fs40 \cf2 \strokec2 Pep Talk\
+\pard\pardeftab720\sl540\sa300\partightenfactor0
+
+\f0\b0\fs32 \cf4 \strokec4 A note before you begin: the projects in the Intro to Machine Learning class were mostly designed to have lots of data points, give intuitive results, and otherwise behave nicely. This project is significantly tougher in that we're now using the real data, which can be messy and doesn't have as many data points as we usually hope for when doing machine learning. Don't get discouraged--imperfect data is something you need to be used to as a data analyst! If you encounter something you haven't seen before, take a step back and think about a smart way around. You can do it!\
+\pard\pardeftab720\sl533\sa100\partightenfactor0
+
+\f1\b\fs40 \cf2 \strokec2 Resources Needed\
+\pard\pardeftab720\sl540\sa300\partightenfactor0
+
+\f0\b0\fs32 \cf4 \strokec4 You should have python and sklearn running on your computer, as well as the starter code (both python scripts and the Enron dataset) that you downloaded as part of the first mini-project in the Intro to Machine Learning course. The starter code can be found in the final_project directory of the codebase that you downloaded for use with the mini-projects. Some relevant files:\'a0\cb1 \uc0\u8232 \u8232 \cb3 poi_id.py : starter code for the POI identifier, you will write your analysis here\'a0\cb1 \uc0\u8232 \u8232 \cb3 final_project_dataset.pkl : the dataset for the project, more details below\'a0\cb1 \uc0\u8232 \u8232 \cb3 tester.py : when you turn in your analysis for evaluation by a Udacity evaluator, you will submit the algorithm, dataset and list of features that you use (these are created automatically in poi_id.py). The evaluator will then use this code to test your result, to make sure we see performance that\'92s similar to what you report. You don\'92t need to do anything with this code, but we provide it for transparency and for your reference.\'a0\cb1 \uc0\u8232 \u8232 \cb3 emails_by_address : this directory contains many text files, each of which contains all the messages to or from a particular email address. It is for your reference, if you want to create more advanced features based on the details of the emails dataset.\
+\pard\pardeftab720\sl533\sa100\partightenfactor0
+
+\f1\b\fs40 \cf2 \strokec2 Steps to Success\
+\pard\pardeftab720\sl540\sa300\partightenfactor0
+
+\f0\b0\fs32 \cf4 \strokec4 We will provide you with starter code, that reads in the data, takes your features of choice, then puts them into a numpy array, which is the input form that most sklearn functions assume. Your job is to engineer the features, pick and tune an algorithm, test, and evaluate your identifier. Several of the mini-projects were designed with this final project in mind, so be on the lookout for ways to use the work you\'92ve already done.\
+The features in the data fall into three major types, namely financial features, email features and POI labels.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl400\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf4 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 financial features: ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus', 'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses', 'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees'] (all units are in US dollars)\cb1 \
+\ls1\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 email features: ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi', 'shared_receipt_with_poi'] (units are generally number of emails messages; notable exception is \'91email_address\'92, which is a text string)\cb1 \
+\ls1\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 POI label: [\'91poi\'92] (boolean, represented as integer)\cb1 \
+\pard\pardeftab720\sl540\partightenfactor0
+
+\fs32 \cf4 \cb3 You are encouraged to make, transform or rescale new features from the starter features. If you do this, you should store the new feature to my_dataset, and if you use the new feature in the final algorithm, you should also add the feature name to my_feature_list, so your coach can access it during testing. For a concrete example of a new feature that you could add to the dataset, refer to the lesson on Feature Selection.\
+\
+\
+\
+\
+}
